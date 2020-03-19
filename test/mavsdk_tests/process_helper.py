@@ -187,10 +187,8 @@ class GzserverRunner(Runner):
         self.add_to_env_if_set("PX4_HOME_LAT")
         self.add_to_env_if_set("PX4_HOME_LON")
         self.add_to_env_if_set("PX4_HOME_ALT")
-        self.cmd = "gzserver"
-        self.args = ["--verbose",
-                     workspace_dir + "/Tools/sitl_gazebo/worlds/" +
-                     self.model + ".world"]
+        self.cmd = workspace_dir + "/Tools/gazebo_run.sh"
+        self.args = [self.model, "empty", workspace_dir]
 
     def add_to_env_if_set(self, var: str) -> None:
         if var in os.environ:
