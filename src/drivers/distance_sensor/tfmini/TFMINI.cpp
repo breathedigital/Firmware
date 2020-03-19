@@ -168,7 +168,7 @@ TFMINI::collect()
 
 	if (!bytes_available) {
 		perf_end(_sample_perf);
-		return -EAGAIN;
+		return 0;
 	}
 
 	// parse entire buffer
@@ -224,7 +224,7 @@ void
 TFMINI::start()
 {
 	// schedule a cycle to start things
-	ScheduleOnInterval(100_us);
+	ScheduleOnInterval(2_ms);
 }
 
 void
@@ -246,7 +246,7 @@ TFMINI::Run()
 	if (collect() == -EAGAIN) {
 		// reschedule to grab the missing bits, time to transmit 9 bytes @ 115200 bps
 		ScheduleClear();
-		ScheduleOnInterval(100_us, 87 * 9);
+		ScheduleOnInterval(2_ms, 87 * 9);
 		return;
 	}
 }
